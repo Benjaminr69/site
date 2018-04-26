@@ -1,0 +1,42 @@
+<h1><%= @advertisement.title %></h1>
+	
+<% if @advertisement.user %>
+	
+<p><%= @advertisement.user.name %></p> <% end %>
+
+<h2><%= @advertisement.price %></h2>
+
+<p><%= @advertisement.content %></p>
+
+<% if @current_user.role == "admin" %>
+	<% if @advertisement.state == "waiting" %>
+		<%= form_tag "/advertisements/#{@advertisement.id}", method: "patch" do %>
+  			<input type="hidden" name="state" value="published">
+  			<input type="submit" value="Publier l'anonce" />
+  		<% end %>
+  	<% else %>
+  		<%= form_tag "/advertisements/#{@advertisement.id}", method: "delete" do %>
+  			<input type="submit" value="Supprimer l'anonce" />
+  		<% end %>
+  	<% end %>
+<% end %>
+
+<p><a href="/advertisements">Retourner à la liste des anonces</a></p><br><br>
+
+<h3>Commentaires de l'anonce :</h3>
+
+<p><% @comments.each do|comment| %>
+
+<p><%= comment.user.name %> a écrit :</p>
+<p>"<%= comment.content %>"</p>
+</p><% end %>
+
+<br>
+
+<p>Poster un commentaire :</p>
+
+<%= form_tag "/advertisements/#{@advertisement.id}", method: "post" do %>
+  <input type="hidden" name="user_id" value="<%= @user.id %>" />
+  <textarea name="content" placeholder="Votre commentaire"></textarea><input type="hidden" name="advertisement_id" value="<%= @advertisement.id %>">
+  <input type="submit" value="Poster le commentaire" />
+<% end %>

@@ -1,0 +1,28 @@
+<% if @current_user %>	
+	<h1>Liste des anonces :</h1>
+	<%= paginate @advertisements %>
+
+<% @advertisements.each do |ad| %>
+	<% if @current_user.role == "admin" %>
+		<% if ad.state == "waiting" %>
+		  	<p><a href="/advertisements/<%= ad.id %>"><%= ad.title %> </a>(en attente de validation par un administrateur)</p>
+		<% else %>
+		  	<p><a href="/advertisements/<%= ad.id %>"><%= ad.title %></a></p>
+		  	<p><%= ad.content %></p>
+		  	<p><%= ad.price %> €</p>
+		<% end %>
+	<% else %>
+		<% if ad.state == "published" %>
+			<p><a href="/advertisements/<%= ad.id %>"><%= ad.title %></a></p>
+			<p><%= ad.content %></p>
+		  	<p><%= ad.price %> €</p>
+		<% end %>
+	<% end %>
+<% end %>
+
+	<a href="/advertisements/new">Créer une anonce</a>
+<% else %>
+	<p>Vous devez vous connecter</p>
+<% end %>
+
+

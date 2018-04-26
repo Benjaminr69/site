@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Site</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if @current_user != nil %>
+      <p>Session : <%= @current_user.name %></p>
+    <% end %>
+    
+    <%= form_tag "/users/login", method: :delete do %>
+      <input type="submit" value="Déconnexion" />
+    <% end %>
+    
+  	<div><%= flash[:info] %></div>
+    <%= yield %>
+  </body>
+</html>

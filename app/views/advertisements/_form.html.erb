@@ -1,0 +1,13 @@
+<%= form_for @advertisement do %>
+  <input type="strings" name="title" value="<%= @advertisement.title %>" placeholder="Titre" />
+  	<p><%= @advertisement.errors[:title].first %></p>
+  <input type="text" name="content" value="<%= @advertisement.content %>" placeholder="Contenu"/>
+  	<p><%= @advertisement.errors[:content].first %></p>
+  <input type="float" name="price" value="<%= @advertisement.price %>" placeholder="Prix" />
+  	<p><%= @advertisement.errors[:price].first %></p>
+  <input type="hidden" name="user_id" value="<%= @current_user.id %>">
+  <input type="hidden" name="state" value="waiting">
+  <input type="submit" value="Soumettre l'anonce" />
+<% end %>
+
+<p><a href="/advertisements">Retourner à la liste des anonces</a></p>
